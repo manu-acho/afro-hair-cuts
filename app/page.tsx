@@ -344,9 +344,19 @@ export default function HomePage() {
               <Scissors className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-8">
             Clip & Chill
           </h1>
+          
+          {/* Animated Bouncing Text Card */}
+          <div className="mb-8 animate-bounce">
+            <div className="inline-block bg-white/90 backdrop-blur-md border border-pink-200 rounded-2xl px-8 py-4 shadow-xl">
+              <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
+                Your Cut. Your Space. Your Convenience.
+              </p>
+            </div>
+          </div>
+          
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
             Where Style Meets Community - Expert cuts & vibrant vibes
           </p>
