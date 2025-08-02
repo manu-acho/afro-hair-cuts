@@ -40,6 +40,371 @@ import { useState } from "react"
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [language, setLanguage] = useState<'en' | 'de' | 'fr'>('en')
+  
+  // Swiss-specific translations
+  const translations = {
+    en: {
+      nav: {
+        home: "Home",
+        services: "Services",
+        booking: "Book Now",
+        joinTeam: "Join Team",
+        community: "Community",
+        bookCut: "Book Cut"
+      },
+      hero: {
+        bouncing: "Your Cut. Your Space. Your Convenience.",
+        tagline: "Where Style Meets Community - Expert cuts & vibrant vibes",
+        bookButton: "Book Your Cut",
+        servicesButton: "View Services"
+      },
+      services: {
+        badge: "Our Services",
+        title: "Expert Cuts & Premium Styles",
+        subtitle: "Professional barbering services delivered with passion and precision",
+        classic: {
+          title: "Classic Cut",
+          description: "Professional haircuts for men - clean, precise cuts that enhance your natural style. No braids, just classic barbering.",
+          duration: "30-45 min"
+        },
+        fade: {
+          title: "Fade & Taper",
+          description: "Expert fades and tapers crafted in your space. Clean transitions and sharp lines for the modern man.",
+          duration: "45-60 min"
+        },
+        boys: {
+          title: "Boys' Cuts",
+          description: "Gentle, patient styling for boys in familiar surroundings. Making haircuts fun and stress-free for children.",
+          duration: "30 min"
+        }
+      },
+      booking: {
+        badge: "Book Now",
+        title: "Book Your Premium Cut",
+        subtitle: "Schedule your appointment and experience the finest barbering in your area",
+        form: {
+          name: "Full Name",
+          email: "Email Address",
+          phone: "Phone Number",
+          date: "Preferred Date",
+          time: "Preferred Time",
+          service: "Service Type",
+          address: "Your Address",
+          notes: "Additional Notes",
+          notesPlaceholder: "Any special requests?",
+          submitButton: "Book Your Premium Cut"
+        }
+      },
+      community: {
+        badge: "Community",
+        title: "Free Street Cuts & Community Choice",
+        subtitle: "Watch our free community haircuts and help us choose styles for our street cutting campaign!",
+        subtitleExtra: "Rate, comment, and suggest your favorite cuts. 🎬✂️",
+        videoButtons: {
+          instagram: "Watch on Instagram",
+          tiktok: "Watch on TikTok"
+        },
+        suggestion: {
+          title: "Suggest a Cut for Our Next Street Session! 💡",
+          subtitle: "Have an idea for our next free community haircut? Share your suggestions and vote on styles!",
+          submitIdeas: "Submit Ideas",
+          submitIdeasDesc: "Share your cut suggestions with our community",
+          communityVote: "Community Vote",
+          communityVoteDesc: "Help choose the next featured style",
+          joinButton: "Join the Community",
+          joinDesc: "Connect with fellow barber enthusiasts and share your passion for great cuts"
+        }
+      },
+      footer: {
+        description: "Your convenience is our priority. Professional haircuts for men and boys, delivered to your doorstep across Switzerland. 🇨🇭",
+        tagline: "Your Cut. Your Space. Your Convenience.",
+        quickLinks: "Quick Links",
+        contact: "Contact",
+        social: "Follow Us",
+        legal: "Legal",
+        links: {
+          bookNow: "Book Now ✂️",
+          services: "Our Services 💼",
+          community: "Community 🎬",
+          joinTeam: "Join Our Team 👥",
+          phone: "Phone",
+          email: "Email",
+          address: "Address",
+          privacy: "Privacy Policy",
+          terms: "Terms of Service",
+          swiss: "Swiss Quality",
+          allRights: "All rights reserved."
+        }
+      },
+      forms: {
+        booking: {
+          namePlaceholder: "Enter your full name",
+          emailPlaceholder: "your.email@example.com",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          serviceSelect: "Select a service",
+          addressPlaceholder: "Enter your full address including postal code",
+          timeSelect: "Select time",
+          notesPlaceholder: "Any special requests?",
+          submitButton: "Book Your Cut"
+        },
+        barber: {
+          namePlaceholder: "Enter your full name",
+          emailPlaceholder: "your.email@example.com",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          cityPlaceholder: "e.g., Bern, Zurich, Basel",
+          experiencePlaceholder: "Tell us about your barbering experience, certifications, specialties...",
+          portfolioPlaceholder: "Instagram, website, or portfolio link",
+          submitButton: "Join Our Team"
+        }
+      },
+      joinTeam: {
+        title: "Join Our Team",
+        subtitle: "Become a professional barber on our platform"
+      }
+    },
+    de: {
+      nav: {
+        home: "Start",
+        services: "Services",
+        booking: "Buchen",
+        joinTeam: "Team",
+        community: "Community",
+        bookCut: "Termin buchen"
+      },
+      hero: {
+        bouncing: "Ihr Schnitt. Ihr Zuhause. Ihre Bequemlichkeit.",
+        tagline: "Wo Stil auf Gemeinschaft trifft - Expertenschnitte & lebendige Atmosphäre",
+        bookButton: "Ihren Schnitt buchen",
+        servicesButton: "Dienstleistungen ansehen"
+      },
+      services: {
+        badge: "Unsere Dienstleistungen",
+        title: "Expertenschnitte & Premium-Styles",
+        subtitle: "Professionelle Coiffeur-Dienstleistungen mit Leidenschaft und Präzision geliefert",
+        classic: {
+          title: "Klassischer Haarschnitt",
+          description: "Professionelle Herrenhaarschnitte - saubere, präzise Schnitte, die Ihren natürlichen Stil unterstreichen. Keine Zöpfe, nur klassische Coiffeur-Kunst.",
+          duration: "30-45 Min"
+        },
+        fade: {
+          title: "Fade & Übergang",
+          description: "Expertenfades und Übergänge, handwerklich in Ihrem Zuhause gefertigt. Saubere Übergänge und scharfe Linien für den modernen Mann.",
+          duration: "45-60 Min"
+        },
+        boys: {
+          title: "Kinderschnitte",
+          description: "Sanftes, geduldiges Styling für Jungen in vertrauter Umgebung. Wir machen Haarschnitte zu einem spassigen und stressfreien Erlebnis.",
+          duration: "30 Min"
+        }
+      },
+      booking: {
+        badge: "Jetzt buchen",
+        title: "Buchen Sie Ihren Premium-Schnitt",
+        subtitle: "Vereinbaren Sie Ihren Termin und erleben Sie die beste Coiffeur-Kunst in Ihrer Region",
+        form: {
+          name: "Vollständiger Name",
+          email: "E-Mail-Adresse",
+          phone: "Telefonnummer",
+          date: "Gewünschtes Datum",
+          time: "Gewünschte Uhrzeit",
+          service: "Art der Dienstleistung",
+          address: "Ihre Adresse",
+          notes: "Zusätzliche Anmerkungen",
+          notesPlaceholder: "Haben Sie spezielle Wünsche?",
+          submitButton: "Premium-Schnitt buchen"
+        }
+      },
+      community: {
+        badge: "Gemeinschaft",
+        title: "Gratis Strassenschnitte & Community-Wahl",
+        subtitle: "Schauen Sie sich unsere kostenlosen Community-Haarschnitte an und helfen Sie uns bei der Auswahl der Styles für unsere Strassenschnitt-Kampagne!",
+        subtitleExtra: "Bewerten, kommentieren und schlagen Sie Ihre Lieblings-Schnitte vor. 🎬✂️",
+        videoButtons: {
+          instagram: "Auf Instagram ansehen",
+          tiktok: "Auf TikTok ansehen"
+        },
+        suggestion: {
+          title: "Schlagen Sie einen Schnitt für unsere nächste Strassensession vor! 💡",
+          subtitle: "Haben Sie eine Idee für unseren nächsten kostenlosen Community-Haarschnitt? Teilen Sie Ihre Vorschläge mit und stimmen Sie über Styles ab!",
+          submitIdeas: "Ideen einreichen",
+          submitIdeasDesc: "Teilen Sie Ihre Schnitt-Vorschläge mit unserer Community",
+          communityVote: "Community-Abstimmung",
+          communityVoteDesc: "Helfen Sie bei der Wahl des nächsten featured Styles",
+          joinButton: "Der Community beitreten",
+          joinDesc: "Vernetzen Sie sich mit anderen Coiffeur-Enthusiasten und teilen Sie Ihre Leidenschaft für tolle Schnitte"
+        }
+      },
+      footer: {
+        description: "Ihre Bequemlichkeit ist unsere Priorität. Professionelle Herrenhaarschnitte und Kinderschnitte, direkt vor Ihre Haustür in der ganzen Schweiz geliefert. 🇨🇭",
+        tagline: "Ihr Schnitt. Ihr Zuhause. Ihre Bequemlichkeit.",
+        quickLinks: "Schnellzugriff",
+        contact: "Kontakt",
+        social: "Folgen Sie uns",
+        legal: "Rechtliches",
+        links: {
+          bookNow: "Jetzt buchen ✂️",
+          services: "Unsere Dienstleistungen 💼",
+          community: "Gemeinschaft 🎬",
+          joinTeam: "Unserem Team beitreten 👥",
+          phone: "Telefon",
+          email: "E-Mail",
+          address: "Adresse",
+          privacy: "Datenschutzrichtlinie",
+          terms: "Nutzungsbedingungen",
+          swiss: "Schweizer Qualität",
+          allRights: "Alle Rechte vorbehalten."
+        }
+      },
+      forms: {
+        booking: {
+          namePlaceholder: "Geben Sie Ihren vollständigen Namen ein",
+          emailPlaceholder: "ihre.email@beispiel.ch",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          serviceSelect: "Service auswählen",
+          addressPlaceholder: "Geben Sie Ihre vollständige Adresse mit Postleitzahl ein",
+          timeSelect: "Zeit auswählen",
+          notesPlaceholder: "Haben Sie spezielle Wünsche?",
+          submitButton: "Schnitt buchen"
+        },
+        barber: {
+          namePlaceholder: "Geben Sie Ihren vollständigen Namen ein",
+          emailPlaceholder: "ihre.email@beispiel.ch",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          cityPlaceholder: "z.B. Bern, Zürich, Basel",
+          experiencePlaceholder: "Erzählen Sie uns von Ihrer Coiffeur-Erfahrung, Zertifikaten, Spezialisierungen...",
+          portfolioPlaceholder: "Instagram, Website oder Portfolio-Link",
+          submitButton: "Unserem Team beitreten"
+        }
+      },
+      joinTeam: {
+        title: "Unserem Team beitreten",
+        subtitle: "Werden Sie ein professioneller Coiffeur auf unserer Plattform"
+      }
+    },
+    fr: {
+      nav: {
+        home: "Accueil",
+        services: "Services",
+        booking: "Réserver",
+        joinTeam: "Rejoindre l'équipe",
+        community: "Communauté",
+        bookCut: "Réserver"
+      },
+      hero: {
+        bouncing: "Votre Coupe. Votre Espace. Votre Confort.",
+        tagline: "Où le Style Rencontre la Communauté - Coupes expertes & ambiance dynamique",
+        bookButton: "Réserver votre coupe",
+        servicesButton: "Voir les services"
+      },
+      services: {
+        badge: "Nos Services",
+        title: "Coupes Expertes & Styles Premium",
+        subtitle: "Services de coiffure professionnels livrés avec passion et précision",
+        classic: {
+          title: "Coupe Classique",
+          description: "Coupes professionnelles pour hommes - coupes nettes et précises qui mettent en valeur votre style naturel. Pas de tresses, juste de la coiffure classique.",
+          duration: "30-45 min"
+        },
+        fade: {
+          title: "Dégradé & Effilé",
+          description: "Dégradés experts et effilés réalisés dans votre espace. Transitions nettes et lignes précises pour l'homme moderne.",
+          duration: "45-60 min"
+        },
+        boys: {
+          title: "Coupes Enfants",
+          description: "Coiffure douce et patiente pour les garçons dans un environnement familier. Rendre les coupes amusantes et sans stress pour les enfants.",
+          duration: "30 min"
+        }
+      },
+      booking: {
+        badge: "Réserver",
+        title: "Réservez votre Coupe Premium",
+        subtitle: "Planifiez votre rendez-vous et découvrez la meilleure coiffure de votre région",
+        form: {
+          name: "Nom complet",
+          email: "Adresse e-mail",
+          phone: "Numéro de téléphone",
+          date: "Date souhaitée",
+          time: "Heure souhaitée",
+          service: "Type de service",
+          address: "Votre adresse",
+          notes: "Notes supplémentaires",
+          notesPlaceholder: "Des demandes spéciales?",
+          submitButton: "Réserver votre Coupe Premium"
+        }
+      },
+      community: {
+        badge: "Communauté",
+        title: "Coupes de Rue Gratuites & Choix Communautaire",
+        subtitle: "Regardez nos coupes communautaires gratuites et aidez-nous à choisir les styles pour notre campagne de coupes de rue!",
+        subtitleExtra: "Notez, commentez et suggérez vos coupes préférées. 🎬✂️",
+        videoButtons: {
+          instagram: "Voir sur Instagram",
+          tiktok: "Voir sur TikTok"
+        },
+        suggestion: {
+          title: "Suggérez une Coupe pour notre Prochaine Session de Rue! 💡",
+          subtitle: "Vous avez une idée pour notre prochaine coupe communautaire gratuite? Partagez vos suggestions et votez pour les styles!",
+          submitIdeas: "Soumettre des Idées",
+          submitIdeasDesc: "Partagez vos suggestions de coupes avec notre communauté",
+          communityVote: "Vote Communautaire",
+          communityVoteDesc: "Aidez à choisir le prochain style vedette",
+          joinButton: "Rejoindre la Communauté",
+          joinDesc: "Connectez-vous avec d'autres passionnés de coiffure et partagez votre passion pour les belles coupes"
+        }
+      },
+      footer: {
+        description: "Votre confort est notre priorité. Coupes professionnelles pour hommes et garçons, livrées à votre porte dans toute la Suisse. 🇨🇭",
+        tagline: "Votre Coupe. Votre Espace. Votre Confort.",
+        quickLinks: "Liens Rapides",
+        contact: "Contact",
+        social: "Suivez-nous",
+        legal: "Légal",
+        links: {
+          bookNow: "Réserver maintenant ✂️",
+          services: "Nos Services 💼",
+          community: "Communauté 🎬",
+          joinTeam: "Rejoindre Notre Équipe 👥",
+          phone: "Téléphone",
+          email: "E-mail",
+          address: "Adresse",
+          privacy: "Politique de Confidentialité",
+          terms: "Conditions d'Utilisation",
+          swiss: "Qualité Suisse",
+          allRights: "Tous droits réservés."
+        }
+      },
+      forms: {
+        booking: {
+          namePlaceholder: "Entrez votre nom complet",
+          emailPlaceholder: "votre.email@exemple.ch",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          serviceSelect: "Sélectionner un service",
+          addressPlaceholder: "Entrez votre adresse complète avec code postal",
+          timeSelect: "Sélectionner l'heure",
+          notesPlaceholder: "Des demandes spéciales?",
+          submitButton: "Réserver Votre Coupe"
+        },
+        barber: {
+          namePlaceholder: "Entrez votre nom complet",
+          emailPlaceholder: "votre.email@exemple.ch",
+          phonePlaceholder: "+41 XX XXX XX XX",
+          cityPlaceholder: "p.ex. Berne, Zurich, Bâle",
+          experiencePlaceholder: "Parlez-nous de votre expérience en coiffure, certifications, spécialités...",
+          portfolioPlaceholder: "Instagram, site web ou lien portfolio",
+          submitButton: "Rejoindre Notre Équipe"
+        }
+      },
+      joinTeam: {
+        title: "Rejoindre Notre Équipe",
+        subtitle: "Devenez un coiffeur professionnel sur notre plateforme"
+      }
+    }
+  } as const
+
+  const t = translations[language]
+
   const [customerWaitlist, setCustomerWaitlist] = useState({
     name: '',
     email: '',
@@ -77,34 +442,31 @@ export default function HomePage() {
 
   const services = [
     {
-      title: "Classic Cut",
-      description:
-        "Professional haircuts for men - clean, precise cuts that enhance your natural style. No braids, just classic barbering.",
-      duration: "30-45 min",
+      title: t.services.classic.title,
+      description: t.services.classic.description,
+      duration: t.services.classic.duration,
       price: "CHF 45",
       icon: Scissors,
-      gradient: "from-purple-500 to-pink-500",
-      bgGradient: "from-purple-50 to-pink-50",
+      gradient: "from-blue-500 to-purple-500",
+      bgGradient: "from-blue-50 to-purple-50",
     },
     {
-      title: "Fade & Taper",
-      description:
-        "Expert fades and tapers crafted in your space. Clean transitions and sharp lines for the modern man.",
-      duration: "45-60 min",
+      title: t.services.fade.title,
+      description: t.services.fade.description,
+      duration: t.services.fade.duration,
       price: "CHF 55",
       icon: Sparkles,
       gradient: "from-pink-500 to-red-500",
       bgGradient: "from-pink-50 to-red-50",
     },
     {
-      title: "Boys' Cuts",
-      description:
-        "Gentle, patient styling for boys in familiar surroundings. Making haircuts fun and stress-free for children.",
-      duration: "30 min",
+      title: t.services.boys.title,
+      description: t.services.boys.description,
+      duration: t.services.boys.duration,
       price: "CHF 35",
       icon: Star,
-      gradient: "from-red-500 to-purple-500",
-      bgGradient: "from-red-50 to-purple-50",
+      gradient: "from-red-500 to-blue-500",
+      bgGradient: "from-red-50 to-blue-50",
     },
   ]
 
@@ -240,44 +602,79 @@ export default function HomePage() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mr-3 shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 rounded-full flex items-center justify-center mr-3 shadow-lg">
                 <Scissors className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent">
                 Clip & Chill
               </span>
             </div>
 
             {/* Desktop Navigation - Centered */}
             <div className="hidden md:flex items-center justify-center flex-1 mx-8">
-              <div className="flex items-center space-x-8 bg-gray-50/80 backdrop-blur-sm px-8 py-3 rounded-full border border-gray-200 shadow-sm">
-                <Link href="#home" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200">
-                  Home
+              <div className="flex items-center space-x-6 bg-gray-50/80 backdrop-blur-sm px-8 py-3 rounded-full border border-gray-200 shadow-sm">
+                <Link href="#home" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
+                  {t.nav.home}
                 </Link>
-                <Link href="#services" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200">
-                  Services
+                <Link href="#services" className="text-gray-700 hover:text-pink-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
+                  {t.nav.services}
                 </Link>
-                <Link href="#booking" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200">
-                  Book Now
+                <Link href="#booking" className="text-gray-700 hover:text-red-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
+                  {t.nav.booking}
                 </Link>
-                <Link href="#barbers" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200">
-                  Join Team
+                <Link href="#barbers" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
+                  {t.nav.joinTeam}
                 </Link>
-                <Link href="#community" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200">
-                  Community
+                <Link href="#community" className="text-gray-700 hover:text-pink-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
+                  {t.nav.community}
                 </Link>
               </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
+            {/* Language Switcher & CTA Button */}
+            <div className="hidden md:flex items-center space-x-4">
+              {/* Language Switcher */}
+              <div className="flex items-center bg-gray-50/80 backdrop-blur-sm rounded-full border border-gray-200 shadow-sm">
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    language === 'en' 
+                      ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                  }`}
+                >
+                  🇺🇸
+                </button>
+                <button
+                  onClick={() => setLanguage('de')}
+                  className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    language === 'de' 
+                      ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                      : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50'
+                  }`}
+                >
+                  🇩🇪
+                </button>
+                <button
+                  onClick={() => setLanguage('fr')}
+                  className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    language === 'fr' 
+                      ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                      : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                  }`}
+                >
+                  🇫🇷
+                </button>
+              </div>
+              
+              {/* CTA Button */}
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Book Cut
+                {t.nav.bookCut}
               </Button>
             </div>
 
@@ -299,30 +696,66 @@ export default function HomePage() {
             <div className="md:hidden">
               <div className="px-4 pt-4 pb-6 space-y-3 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-lg">
                 <Link href="#home" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  🏠 Home
+                  🏠 {t.nav.home}
                 </Link>
-                <Link href="#services" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  ✂️ Services
+                <Link href="#services" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 rounded-lg font-medium">
+                  ✂️ {t.nav.services}
                 </Link>
-                <Link href="#booking" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  📅 Book Now
+                <Link href="#booking" className="block px-4 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-200 rounded-lg font-medium">
+                  📅 {t.nav.booking}
                 </Link>
                 <Link href="#barbers" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  👨‍💼 Join Team
+                  👨‍💼 {t.nav.joinTeam}
                 </Link>
-                <Link href="#community" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  🎬 Community
+                <Link href="#community" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 rounded-lg font-medium">
+                  🎬 {t.nav.community}
                 </Link>
+                
+                {/* Mobile Language Switcher */}
+                <div className="flex items-center justify-center space-x-2 py-3">
+                  <span className="text-sm text-gray-500 mr-2">Language:</span>
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      language === 'en' 
+                        ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
+                  >
+                    🇺🇸
+                  </button>
+                  <button
+                    onClick={() => setLanguage('de')}
+                    className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      language === 'de' 
+                        ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                        : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50'
+                    }`}
+                  >
+                    🇩🇪
+                  </button>
+                  <button
+                    onClick={() => setLanguage('fr')}
+                    className={`px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      language === 'fr' 
+                        ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white shadow-md' 
+                        : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                    }`}
+                  >
+                    🇫🇷
+                  </button>
+                </div>
+                
                 <Button 
                   size="lg" 
-                  className="w-full mt-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white py-4 rounded-full shadow-lg"
+                  className="w-full mt-4 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white py-4 rounded-full shadow-lg"
                   onClick={() => {
                     setIsMenuOpen(false)
                     document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })
                   }}
                 >
                   <Calendar className="w-4 h-4 mr-2" />
-                  Book Your Cut
+                  {t.hero.bookButton}
                 </Button>
               </div>
             </div>
@@ -334,49 +767,49 @@ export default function HomePage() {
       <section id="home" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 overflow-hidden pt-20 bg-gradient-to-br from-rose-50 via-pink-50 to-red-50">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-pink-400 to-red-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-400 via-pink-400 to-red-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
           <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
         </div>
 
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <div className="flex items-center justify-center mb-6">
-            <div className="w-20 h-20 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-full flex items-center justify-center shadow-xl">
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 rounded-full flex items-center justify-center shadow-xl">
               <Scissors className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-8">
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent mb-8">
             Clip & Chill
           </h1>
           
           {/* Animated Bouncing Text Card */}
           <div className="mb-8 animate-bounce">
-            <div className="inline-block bg-white/90 backdrop-blur-md border border-pink-200 rounded-2xl px-8 py-4 shadow-xl">
-              <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
-                Your Cut. Your Space. Your Convenience.
+            <div className="inline-block bg-white/90 backdrop-blur-md border border-blue-200 rounded-2xl px-8 py-4 shadow-xl">
+              <p className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent">
+                {t.hero.bouncing}
               </p>
             </div>
           </div>
           
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            Where Style Meets Community - Expert cuts & vibrant vibes
+            {t.hero.tagline}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white px-8 py-4 text-lg rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white px-8 py-4 text-lg rounded-full shadow-xl transform hover:scale-105 transition-all duration-300"
               onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Calendar className="w-5 h-5 mr-2" />
-              Book Your Cut
+              {t.hero.bookButton}
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-purple-500 text-purple-700 hover:bg-purple-50 px-8 py-4 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="border-2 border-blue-500 text-blue-700 hover:bg-blue-50 px-8 py-4 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Scissors className="w-5 h-5 mr-2" />
-              View Services
+              {t.hero.servicesButton}
             </Button>
           </div>
         </div>
@@ -386,14 +819,14 @@ export default function HomePage() {
       <section id="services" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <Badge className="mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-full text-base shadow-lg">
-              Our Services
+            <Badge className="mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 text-white px-6 py-3 rounded-full text-base shadow-lg">
+              {t.services.badge}
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
-              Expert Cuts & Premium Styles
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent mb-6">
+              {t.services.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Professional barbering services delivered with passion and precision
+              {t.services.subtitle}
             </p>
           </div>
 
@@ -429,13 +862,13 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-full text-base shadow-lg">
-              Book Now
+              {t.booking.badge}
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
-              Book Your Premium Cut
+              {t.booking.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Schedule your appointment and experience the finest barbering in your area
+              {t.booking.subtitle}
             </p>
           </div>
 
@@ -451,7 +884,7 @@ export default function HomePage() {
                       required
                       value={bookingForm.name}
                       onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})}
-                      placeholder="Enter your full name"
+                      placeholder={t.forms.booking.namePlaceholder}
                     />
                   </div>
                   <div>
@@ -462,7 +895,7 @@ export default function HomePage() {
                       required
                       value={bookingForm.email}
                       onChange={(e) => setBookingForm({...bookingForm, email: e.target.value})}
-                      placeholder="your.email@example.com"
+                      placeholder={t.forms.booking.emailPlaceholder}
                     />
                   </div>
                 </div>
@@ -476,14 +909,14 @@ export default function HomePage() {
                       required
                       value={bookingForm.phone}
                       onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})}
-                      placeholder="+41 XX XXX XX XX"
+                      placeholder={t.forms.booking.phonePlaceholder}
                     />
                   </div>
                   <div>
                     <Label htmlFor="service">Service *</Label>
                     <Select value={bookingForm.service} onValueChange={(value) => setBookingForm({...bookingForm, service: value})}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a service" />
+                        <SelectValue placeholder={t.forms.booking.serviceSelect} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="classic-cut">Classic Cut (CHF 45)</SelectItem>
@@ -501,7 +934,7 @@ export default function HomePage() {
                     required
                     value={bookingForm.address}
                     onChange={(e) => setBookingForm({...bookingForm, address: e.target.value})}
-                    placeholder="Enter your full address including postal code"
+                    placeholder={t.forms.booking.addressPlaceholder}
                     className="min-h-[60px]"
                   />
                 </div>
@@ -521,7 +954,7 @@ export default function HomePage() {
                     <Label htmlFor="time">Preferred Time *</Label>
                     <Select value={bookingForm.time} onValueChange={(value) => setBookingForm({...bookingForm, time: value})}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select time" />
+                        <SelectValue placeholder={t.forms.booking.timeSelect} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="09:00">09:00 AM</SelectItem>
@@ -545,7 +978,7 @@ export default function HomePage() {
                     id="notes"
                     value={bookingForm.notes}
                     onChange={(e) => setBookingForm({...bookingForm, notes: e.target.value})}
-                    placeholder="Any special requests?"
+                    placeholder={t.forms.booking.notesPlaceholder}
                     className="min-h-[60px]"
                   />
                 </div>
@@ -553,10 +986,10 @@ export default function HomePage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white py-4 text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white py-4 text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
-                  Book Your Premium Cut
+                  {t.forms.booking.submitButton}
                 </Button>
               </form>
             </CardContent>
@@ -568,8 +1001,8 @@ export default function HomePage() {
       <section id="barbers" className="py-16 px-4 sm:px-6 lg:px-8 bg-green-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Join Our Team</h2>
-            <p className="text-gray-600">Become a professional barber on our platform</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">{t.joinTeam.title}</h2>
+            <p className="text-gray-600">{t.joinTeam.subtitle}</p>
           </div>
 
           <Card className="shadow-xl">
@@ -584,7 +1017,7 @@ export default function HomePage() {
                       required
                       value={barberSignup.name}
                       onChange={(e) => setBarberSignup({...barberSignup, name: e.target.value})}
-                      placeholder="Enter your full name"
+                      placeholder={t.forms.barber.namePlaceholder}
                     />
                   </div>
                   <div>
@@ -595,7 +1028,7 @@ export default function HomePage() {
                       required
                       value={barberSignup.email}
                       onChange={(e) => setBarberSignup({...barberSignup, email: e.target.value})}
-                      placeholder="your.email@example.com"
+                      placeholder={t.forms.barber.emailPlaceholder}
                     />
                   </div>
                 </div>
@@ -609,7 +1042,7 @@ export default function HomePage() {
                       required
                       value={barberSignup.phone}
                       onChange={(e) => setBarberSignup({...barberSignup, phone: e.target.value})}
-                      placeholder="+41 XX XXX XX XX"
+                      placeholder={t.forms.barber.phonePlaceholder}
                     />
                   </div>
                   <div>
@@ -620,7 +1053,7 @@ export default function HomePage() {
                       required
                       value={barberSignup.city}
                       onChange={(e) => setBarberSignup({...barberSignup, city: e.target.value})}
-                      placeholder="e.g., Bern, Zurich, Basel"
+                      placeholder={t.forms.barber.cityPlaceholder}
                     />
                   </div>
                 </div>
@@ -632,7 +1065,7 @@ export default function HomePage() {
                     required
                     value={barberSignup.experience}
                     onChange={(e) => setBarberSignup({...barberSignup, experience: e.target.value})}
-                    placeholder="Tell us about your barbering experience, certifications, specialties..."
+                    placeholder={t.forms.barber.experiencePlaceholder}
                     className="min-h-[80px]"
                   />
                 </div>
@@ -644,7 +1077,7 @@ export default function HomePage() {
                     type="url"
                     value={barberSignup.portfolio}
                     onChange={(e) => setBarberSignup({...barberSignup, portfolio: e.target.value})}
-                    placeholder="Instagram, website, or portfolio link"
+                    placeholder={t.forms.barber.portfolioPlaceholder}
                   />
                 </div>
 
@@ -654,7 +1087,7 @@ export default function HomePage() {
                   className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white py-4 text-lg rounded-full"
                 >
                   <UserPlus className="w-5 h-5 mr-2" />
-                  Apply Now
+                  {t.forms.barber.submitButton}
                 </Button>
               </form>
             </CardContent>
@@ -667,15 +1100,15 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-full text-base shadow-lg">
-              Community
+              {t.community.badge}
             </Badge>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6 leading-tight">
-              Free Street Cuts & Community Choice
+              {t.community.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Watch our free community haircuts and help us choose styles for our street cutting campaign! 
+              {t.community.subtitle}
               <span className="block mt-2 text-lg bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent font-semibold">
-                Rate, comment, and suggest your favorite cuts. 🎬✂️
+                {t.community.subtitleExtra}
               </span>
             </p>
           </div>
@@ -713,7 +1146,7 @@ export default function HomePage() {
                     className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Instagram className="w-5 h-5 mr-2" />
-                    Watch on Instagram
+                    {t.community.videoButtons.instagram}
                   </Button>
                   <Button 
                     size="lg" 
@@ -721,7 +1154,7 @@ export default function HomePage() {
                     className="w-full sm:w-auto border-2 border-purple-500 text-purple-700 hover:bg-purple-50 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Music className="w-5 h-5 mr-2" />
-                    Watch on TikTok
+                    {t.community.videoButtons.tiktok}
                   </Button>
                 </div>
               </CardContent>
@@ -732,10 +1165,10 @@ export default function HomePage() {
           <div className="bg-gradient-to-r from-white/90 via-pink-50/90 to-red-50/90 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-pink-200 shadow-2xl">
             <div className="text-center mb-10">
               <h3 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
-                Suggest a Cut for Our Next Street Session! 💡
+                {t.community.suggestion.title}
               </h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Have an idea for our next free community haircut? Share your suggestions and vote on styles!
+                {t.community.suggestion.subtitle}
               </p>
             </div>
             
@@ -746,8 +1179,8 @@ export default function HomePage() {
                     <Upload className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-1">Submit Ideas</h4>
-                    <p className="text-gray-600">Share your cut suggestions with our community</p>
+                    <h4 className="text-lg font-bold text-gray-800 mb-1">{t.community.suggestion.submitIdeas}</h4>
+                    <p className="text-gray-600">{t.community.suggestion.submitIdeasDesc}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-pink-200 hover:shadow-lg transition-all duration-300">
@@ -755,8 +1188,8 @@ export default function HomePage() {
                     <Users className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-1">Community Vote</h4>
-                    <p className="text-gray-600">Help choose the next featured style</p>
+                    <h4 className="text-lg font-bold text-gray-800 mb-1">{t.community.suggestion.communityVote}</h4>
+                    <p className="text-gray-600">{t.community.suggestion.communityVoteDesc}</p>
                   </div>
                 </div>
               </div>
@@ -767,10 +1200,10 @@ export default function HomePage() {
                   className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white py-6 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105"
                 >
                   <Users className="w-6 h-6 mr-3" />
-                  Join the Community
+                  {t.community.suggestion.joinButton}
                 </Button>
                 <p className="text-sm text-gray-500 mt-4 max-w-xs mx-auto">
-                  Connect with fellow barber enthusiasts and share your passion for great cuts
+                  {t.community.suggestion.joinDesc}
                 </p>
               </div>
             </div>
@@ -797,23 +1230,22 @@ export default function HomePage() {
                 </h3>
               </div>
               <p className="text-gray-300 mb-4 leading-relaxed">
-                Your convenience is our priority. Professional haircuts for men and boys, 
-                delivered to your doorstep across Switzerland. 🇨🇭
+                {t.footer.description}
               </p>
               <p className="text-sm text-blue-400 font-semibold">
-                Your Cut. Your Space. Your Convenience.
+                {t.footer.tagline}
               </p>
             </div>
 
             <div className="text-center md:text-left">
-              <h4 className="text-lg font-semibold mb-4 text-cyan-400">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-4 text-cyan-400">{t.footer.quickLinks}</h4>
               <ul className="space-y-2 text-gray-300">
                 <li>
                   <button
                     onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
                     className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
                   >
-                    Book Now ✂️
+                    {t.footer.links.bookNow}
                   </button>
                 </li>
                 <li>
@@ -821,7 +1253,7 @@ export default function HomePage() {
                     onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                     className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
                   >
-                    Our Services 💼
+                    {t.footer.links.services}
                   </button>
                 </li>
                 <li>
@@ -829,14 +1261,14 @@ export default function HomePage() {
                     onClick={() => document.getElementById('community')?.scrollIntoView({ behavior: 'smooth' })}
                     className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
                   >
-                    Gallery 🎬
+                    {t.footer.links.community}
                   </button>
                 </li>
               </ul>
             </div>
 
             <div className="text-center md:text-left">
-              <h4 className="text-lg font-semibold mb-4 text-cyan-400">Contact & Social</h4>
+              <h4 className="text-lg font-semibold mb-4 text-cyan-400">{t.footer.contact}</h4>
               <div className="space-y-2 text-gray-300 mb-4">
                 <div className="flex items-center gap-2 hover:text-cyan-400 transition-colors justify-center md:justify-start">
                   <Phone className="w-4 h-4" />
@@ -883,15 +1315,15 @@ export default function HomePage() {
 
           <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Clip & Chill. All rights reserved. Made with �
+              © {new Date().getFullYear()} Clip & Chill. {t.footer.links.allRights} Made with �
             </div>
 
             <div className="flex items-center gap-4 text-sm">
               <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
-                Privacy Policy
+                {t.footer.links.privacy}
               </Link>
               <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
-                Terms of Service
+                {t.footer.links.terms}
               </Link>
             </div>
           </div>
