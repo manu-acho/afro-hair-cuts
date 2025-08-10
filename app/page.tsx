@@ -430,6 +430,10 @@ export default function HomePage() {
     time: '',
     notes: ''
   })
+  
+  // Loading states for form submissions
+  const [isBookingLoading, setIsBookingLoading] = useState(false)
+  const [isBarberLoading, setIsBarberLoading] = useState(false)
 
   const [communityVideos] = useState([
     {
@@ -495,54 +499,138 @@ export default function HomePage() {
 
   const handleBarberSignup = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsBarberLoading(true)
+    
     try {
-      const response = await fetch('https://your-n8n-webhook-url.com/webhook/barber-signup', {
+      // Simplified payload structure that matches Google Sheets columns (like booking form)
+      const payload = {
+        ID: `BARBER-${Date.now()}`,
+        Timestamp: new Date().toISOString(),
+        Name: barberSignup.name,
+        Email: barberSignup.email,
+        Phone: barberSignup.phone,
+        City: barberSignup.city,
+        Experience: barberSignup.experience,
+        Portfolio: barberSignup.portfolio || '',
+        Status: 'Pending Review',
+        Language: language,
+        Source: 'website'
+      }
+
+      console.log('Sending barber application payload:', payload)
+
+      const response = await fetch('https://n8n-waga-u47077.vm.elestio.app/webhook/273db6a1-0bed-4403-8ed8-94f9fa495174', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...barberSignup,
-          timestamp: new Date().toISOString(),
-          type: 'barber'
-        }),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload),
       })
       
+      console.log('Response status:', response.status)
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+      
       if (response.ok) {
-        alert('Thanks for your interest! We\'ll be in touch about joining our platform.')
+        const responseText = await response.text()
+        console.log('Response text:', responseText)
+        
+        let result = null
+        try {
+          result = JSON.parse(responseText)
+        } catch (e) {
+          console.log('Response is not JSON, treating as success')
+        }
+        
+        alert('Application submitted successfully! We\'ll be in touch soon.')
         setBarberSignup({ name: '', email: '', phone: '', experience: '', city: '', portfolio: '' })
+      } else {
+        const errorText = await response.text()
+        console.error('Error response:', errorText)
+        throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`)
       }
     } catch (error) {
       console.error('Barber signup error:', error)
-      alert('There was an error. Please try again.')
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        alert('Network error: Unable to connect to application service. Please check your internet connection and try again.')
+      } else if (error instanceof Error) {
+        alert(`There was an error submitting your application: ${error.message}. Please try again or contact us directly.`)
+      } else {
+        alert('There was an unexpected error submitting your application. Please try again or contact us directly.')
+      }
+    } finally {
+      setIsBarberLoading(false)
     }
   }
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsBookingLoading(true)
+    
     try {
-      // Webhook integration for n8n automation
-      const response = await fetch('https://your-n8n-webhook-url.com/webhook/booking', {
+      // Simplified payload structure that matches Google Sheets columns
+      const payload = {
+        ID: `BOOK-${Date.now()}`,
+        Timestamp: new Date().toISOString(),
+        Name: bookingForm.name,
+        Email: bookingForm.email,
+        Phone: bookingForm.phone,
+        Service: bookingForm.service,
+        Date: bookingForm.date,
+        Time: bookingForm.time,
+        Address: bookingForm.address,
+        Status: 'Pending',
+        Payment: 'Not Processed',
+        Notes: bookingForm.notes || '',
+        Language: language,
+        Source: 'website'
+      }
+
+      console.log('Sending booking payload:', payload)
+
+      const response = await fetch('https://n8n-waga-u47077.vm.elestio.app/webhook/81ddbf14-e1fa-4649-9441-af4fd6e52720', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          ...bookingForm,
-          timestamp: new Date().toISOString(),
-          source: 'website'
-        }),
+        body: JSON.stringify(payload),
       })
       
+      console.log('Response status:', response.status)
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+
       if (response.ok) {
-        alert('Booking request sent successfully! We\'ll contact you soon.')
+        const responseText = await response.text()
+        console.log('Response text:', responseText)
+        
+        let result = null
+        try {
+          result = JSON.parse(responseText)
+        } catch (e) {
+          console.log('Response is not JSON, treating as success')
+        }
+        
+        alert('Booking request sent successfully! We\'ll contact you soon to confirm your appointment.')
         setBookingForm({
           name: '', email: '', phone: '', address: '', service: '', date: '', time: '', notes: ''
         })
       } else {
-        alert('There was an error sending your booking. Please try again.')
+        const errorText = await response.text()
+        console.error('Error response:', errorText)
+        throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`)
       }
     } catch (error) {
-      console.error('Booking error:', error)
-      alert('There was an error sending your booking. Please try again.')
+      console.error('Booking submission error:', error)
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        alert('Network error: Unable to connect to booking service. Please check your internet connection and try again.')
+      } else if (error instanceof Error) {
+        alert(`There was an error sending your booking request: ${error.message}. Please try again or contact us directly.`)
+      } else {
+        alert('There was an unexpected error sending your booking request. Please try again or contact us directly.')
+      }
+    } finally {
+      setIsBookingLoading(false)
     }
   }
 
@@ -986,10 +1074,20 @@ export default function HomePage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white py-4 text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                  disabled={isBookingLoading}
+                  className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white py-4 text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  {t.forms.booking.submitButton}
+                  {isBookingLoading ? (
+                    <>
+                      <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Calendar className="w-5 h-5 mr-2" />
+                      {t.forms.booking.submitButton}
+                    </>
+                  )}
                 </Button>
               </form>
             </CardContent>
@@ -1084,10 +1182,20 @@ export default function HomePage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white py-4 text-lg rounded-full"
+                  disabled={isBarberLoading}
+                  className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white py-4 text-lg rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <UserPlus className="w-5 h-5 mr-2" />
-                  {t.forms.barber.submitButton}
+                  {isBarberLoading ? (
+                    <>
+                      <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="w-5 h-5 mr-2" />
+                      {t.forms.barber.submitButton}
+                    </>
+                  )}
                 </Button>
               </form>
             </CardContent>
