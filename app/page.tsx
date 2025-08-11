@@ -563,12 +563,31 @@ export default function HomePage() {
     }
   }
 
+  // Helper functions for service pricing
+  const getServicePrice = (serviceType: string): number => {
+    switch(serviceType) {
+      case 'classic-cut': return 45;
+      case 'fade-taper': return 55;
+      case 'boys-cut': return 35;
+      default: return 0;
+    }
+  }
+
+  const getServiceDisplayName = (serviceType: string): string => {
+    switch(serviceType) {
+      case 'classic-cut': return 'Classic Cut';
+      case 'fade-taper': return 'Fade & Taper';
+      case 'boys-cut': return 'Boys\' Cut';
+      default: return 'Unknown Service';
+    }
+  }
+
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsBookingLoading(true)
     
     try {
-      // Simplified payload structure that matches Google Sheets columns
+      // Enhanced payload structure with pricing information for Stripe integration
       const payload = {
         ID: `BOOK-${Date.now()}`,
         Timestamp: new Date().toISOString(),
@@ -576,11 +595,14 @@ export default function HomePage() {
         Email: bookingForm.email,
         Phone: bookingForm.phone,
         Service: bookingForm.service,
+        ServiceName: getServiceDisplayName(bookingForm.service),
+        ServicePrice: getServicePrice(bookingForm.service),
+        ServiceCurrency: 'CHF',
         Date: bookingForm.date,
         Time: bookingForm.time,
         Address: bookingForm.address,
-        Status: 'Pending',
-        Payment: 'Not Processed',
+        Status: 'Pending Payment',
+        Payment: 'Pending',
         Notes: bookingForm.notes || '',
         Language: language,
         Source: 'website'
