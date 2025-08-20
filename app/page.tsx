@@ -35,8 +35,134 @@ import {
   Globe,
 } from "lucide-react"
 import Image from "next/image"
+// (removed duplicate import)
+// IPFS image URLs for dynamic carousels
+// (removed duplicate heroImages and serviceImages)
+
+// Simple carousel hook
+// (removed duplicate useCarousel)
+
+// Hero Carousel Component
+// (removed duplicate HeroCarousel)
+
+// Service Carousel Component
+// (removed duplicate ServiceCarousel)
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+
+// IPFS image URLs for dynamic carousels
+const heroImages = [
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeiejts2nur4e5qs5fwugcme62hmvplr3nposoyzpwx4oeva5hyrzjm",
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeigooaz7pmm3v7bci4sg4xfpio4ynexka6mpoe7i42piab3nxdhedm",
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeihp22t7jwxvkbxfg4sdiqzjegswhi4utxp2hqsrnawqycqxijtic4",
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeig7bisdsz57wuoqsrobhhgnfmu5ind7l344rk6tzvdow63ohuap5q"
+];
+const serviceImages = [
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeidpp7toobj53wnlnfatvyufjgxdsxbdio4dzu2ww6lyhjtxylogn4",
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeih5mno3uoa2uro6dp7hvc6x6zz4hnydpt6axpqczuhfzfdzd2zcna",
+  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeiarstljwk27e6trm33jpfvsefq75niw66tt6fjn6qzdae5fphcmqq"
+];
+
+// Simple carousel hook
+function useCarousel(length: number, interval = 3500) {
+  const [index, setIndex] = useState(0);
+  const paused = useRef(false);
+  useEffect(() => {
+    if (length <= 1) return;
+    const timer = setInterval(() => {
+      if (!paused.current) setIndex(i => (i + 1) % length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [length, interval]);
+  return { index, setIndex, paused };
+}
+
+// Hero Carousel Component
+function HeroCarousel() {
+  const { index, setIndex, paused } = useCarousel(heroImages.length, 3500);
+  const width = 520, height = 360;
+  return (
+    <div
+      className="relative flex justify-center items-center mb-8"
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+    >
+      <div className="overflow-hidden rounded-2xl shadow-lg" style={{ width, height, background: 'rgba(255,255,255,0.8)' }}>
+        <div
+          className="flex transition-transform duration-700"
+          style={{ transform: `translateX(-${index * width}px)` }}
+        >
+          {heroImages.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt={i === 0 ? "At-home haircut service" : "Street haircut service"}
+              width={width}
+              height={height}
+              className="object-contain select-none bg-white"
+              draggable={false}
+              priority={i === 0}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+        {heroImages.map((_, i) => (
+          <button
+            key={i}
+            className={`w-2.5 h-2.5 rounded-full ${i === index ? 'bg-blue-500' : 'bg-gray-300'} transition-colors`}
+            onClick={() => setIndex(i)}
+            aria-label={`Go to slide ${i+1}`}
+            tabIndex={0}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Service Carousel Component
+function ServiceCarousel() {
+  const { index, setIndex, paused } = useCarousel(serviceImages.length, 3500);
+  const width = 480, height = 320;
+  return (
+    <div
+      className="relative flex justify-center items-center mt-2 mb-8"
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+    >
+      <div className="overflow-hidden rounded-xl shadow-md" style={{ width, height, background: 'rgba(255,255,255,0.8)' }}>
+        <div
+          className="flex transition-transform duration-700"
+          style={{ transform: `translateX(-${index * width}px)` }}
+        >
+          {serviceImages.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt={`Service image ${i+1}`}
+              width={width}
+              height={height}
+              className="object-contain select-none bg-white"
+              draggable={false}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+        {serviceImages.map((_, i) => (
+          <button
+            key={i}
+            className={`w-2 h-2 rounded-full ${i === index ? 'bg-pink-500' : 'bg-gray-300'} transition-colors`}
+            onClick={() => setIndex(i)}
+            aria-label={`Go to slide ${i+1}`}
+            tabIndex={0}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -890,7 +1016,6 @@ export default function HomePage() {
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent mb-8">
             Clip & Chill
           </h1>
-          
           {/* Animated Bouncing Text Card */}
           <div className="mb-8 animate-bounce">
             <div className="inline-block bg-white/90 backdrop-blur-md border border-blue-200 rounded-2xl px-8 py-4 shadow-xl">
@@ -899,10 +1024,11 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          
           <p className="text-xl md:text-2xl text-gray-600 mb-8">
             {t.hero.tagline}
           </p>
+          {/* Dynamic Hero Carousel */}
+          <HeroCarousel />
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
@@ -940,7 +1066,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
             {services.map((service, index) => (
               <Card key={index} className="group bg-white/90 backdrop-blur-md border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 rounded-3xl overflow-hidden">
                 <CardHeader className="text-center pb-4 p-8">
@@ -964,6 +1090,8 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+          {/* Dynamic Service Carousel */}
+          <ServiceCarousel />
         </div>
       </section>
 
