@@ -25,7 +25,6 @@ import {
   Users,
   ThumbsUp,
   Play,
-  Upload,
   Twitter,
   Menu,
   X,
@@ -34,6 +33,8 @@ import {
   Settings,
   Globe,
 } from "lucide-react"
+import { FaTrophy, FaHeart, FaFlag, FaVideo, FaCut, FaBriefcase } from "react-icons/fa"
+import { TbScissors, TbBriefcase, TbUsers, TbPhone, TbMail } from "react-icons/tb"
 import Image from "next/image"
 // (removed duplicate import)
 // IPFS image URLs for dynamic carousels
@@ -52,7 +53,6 @@ import { useState, useEffect, useRef } from "react"
 
 // IPFS image URLs for dynamic carousels
 const heroImages = [
-  "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeiejts2nur4e5qs5fwugcme62hmvplr3nposoyzpwx4oeva5hyrzjm",
   "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeigooaz7pmm3v7bci4sg4xfpio4ynexka6mpoe7i42piab3nxdhedm",
   "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeihp22t7jwxvkbxfg4sdiqzjegswhi4utxp2hqsrnawqycqxijtic4",
   "https://violet-rainy-toad-577.mypinata.cloud/ipfs/bafybeig7bisdsz57wuoqsrobhhgnfmu5ind7l344rk6tzvdow63ohuap5q"
@@ -243,17 +243,17 @@ export default function HomePage() {
         }
       },
       footer: {
-        description: "Your convenience is our priority. Professional haircuts for men and boys, delivered to your doorstep across Switzerland. 🇨🇭",
+        description: "Your convenience is our priority. Professional haircuts for men and boys in your preferred location.",
         tagline: "Your Cut. Your Space. Your Convenience.",
         quickLinks: "Quick Links",
         contact: "Contact",
         social: "Follow Us",
         legal: "Legal",
         links: {
-          bookNow: "Book Now ✂️",
-          services: "Our Services 💼",
-          community: "Community 🎬",
-          joinTeam: "Join Our Team 👥",
+          bookNow: "Book Now",
+          services: "Our Services",
+          community: "Community",
+          joinTeam: "Join Our Team",
           phone: "Phone",
           email: "Email",
           address: "Address",
@@ -362,17 +362,17 @@ export default function HomePage() {
         }
       },
       footer: {
-        description: "Ihre Bequemlichkeit ist unsere Priorität. Professionelle Herrenhaarschnitte und Kinderschnitte, direkt vor Ihre Haustür in der ganzen Schweiz geliefert. 🇨🇭",
+        description: "Ihre Bequemlichkeit ist unsere Priorität. Professionelle Herrenhaarschnitte und Kinderschnitte, direkt vor Ihre Haustür in der ganzen Schweiz geliefert.",
         tagline: "Ihr Schnitt. Ihr Zuhause. Ihre Bequemlichkeit.",
         quickLinks: "Schnellzugriff",
         contact: "Kontakt",
         social: "Folgen Sie uns",
         legal: "Rechtliches",
         links: {
-          bookNow: "Jetzt buchen ✂️",
-          services: "Unsere Dienstleistungen 💼",
-          community: "Gemeinschaft 🎬",
-          joinTeam: "Unserem Team beitreten 👥",
+          bookNow: "Jetzt buchen",
+          services: "Unsere Dienstleistungen",
+          community: "Gemeinschaft",
+          joinTeam: "Unserem Team beitreten",
           phone: "Telefon",
           email: "E-Mail",
           address: "Adresse",
@@ -481,17 +481,17 @@ export default function HomePage() {
         }
       },
       footer: {
-        description: "Votre confort est notre priorité. Coupes professionnelles pour hommes et garçons, livrées à votre porte dans toute la Suisse. 🇨🇭",
+        description: "Votre confort est notre priorité. Coupes professionnelles pour hommes et garçons, livrées à votre porte dans toute la Suisse.",
         tagline: "Votre Coupe. Votre Espace. Votre Confort.",
         quickLinks: "Liens Rapides",
         contact: "Contact",
         social: "Suivez-nous",
         legal: "Légal",
         links: {
-          bookNow: "Réserver maintenant ✂️",
-          services: "Nos Services 💼",
-          community: "Communauté 🎬",
-          joinTeam: "Rejoindre Notre Équipe 👥",
+          bookNow: "Réserver maintenant",
+          services: "Nos Services",
+          community: "Communauté",
+          joinTeam: "Rejoindre Notre Équipe",
           phone: "Téléphone",
           email: "E-mail",
           address: "Adresse",
@@ -560,15 +560,6 @@ export default function HomePage() {
   // Loading states for form submissions
   const [isBookingLoading, setIsBookingLoading] = useState(false)
   const [isBarberLoading, setIsBarberLoading] = useState(false)
-
-  const [communityVideos] = useState([
-    {
-      id: 1,
-      title: "Fresh Street Cut - Free Community Session",
-      thumbnail: "/placeholder.svg?height=400&width=600&query=street haircut barber",
-      views: "12.5K"
-    }
-  ])
 
   const services = [
     {
@@ -831,6 +822,77 @@ export default function HomePage() {
   ]
 
   return (
+    <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Clip & Chill",
+            "image": "https://clipandchill.ch/og-image.jpg",
+            "description": "Professional haircuts for men and boys delivered to your home across Switzerland. Expert barbers, your convenience.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "CH",
+              "addressLocality": "Switzerland"
+            },
+            "telephone": "+41-XX-XXX-XX-XX",
+            "email": "hello@clipandchill.ch",
+            "url": "https://clipandchill.ch",
+            "sameAs": [
+              "https://instagram.com/clipandchill",
+              "https://facebook.com/clipandchill",
+              "https://tiktok.com/@clipandchill"
+            ],
+            "serviceType": "Hair Salon",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Switzerland"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Haircut Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Classic Cut",
+                    "description": "Professional haircuts for men - clean, precise cuts that enhance your natural style."
+                  },
+                  "price": "45",
+                  "priceCurrency": "CHF"
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Fade & Taper",
+                    "description": "Expert fades and tapers crafted in your space. Clean transitions and sharp lines for the modern man."
+                  },
+                  "price": "55",
+                  "priceCurrency": "CHF"
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Boys' Cut",
+                    "description": "Gentle, patient styling for boys in familiar surroundings. Making haircuts fun and stress-free for children."
+                  },
+                  "price": "35",
+                  "priceCurrency": "CHF"
+                }
+              ]
+            },
+            "openingHours": "Mo-Sa 09:00-18:00",
+            "priceRange": "CHF 35-55"
+          })
+        }}
+      />
+
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg">
@@ -861,8 +923,9 @@ export default function HomePage() {
                 <Link href="#barbers" className="text-gray-700 hover:text-blue-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
                   {t.nav.joinTeam}
                 </Link>
-                <Link href="#community" className="text-gray-700 hover:text-pink-600 transition-colors font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-2">
-                  {t.nav.community}
+                <Link href="/community-portal" className="text-gray-700 hover:text-pink-600 transition-all font-medium hover:scale-105 transform duration-200 flex items-center justify-center whitespace-nowrap px-3 py-1.5 bg-gradient-to-r from-pink-50 to-red-50 rounded-full border border-pink-200 shadow-sm hover:shadow-md hover:from-pink-100 hover:to-red-100">
+                  <FaTrophy className="w-4 h-4 text-pink-600 mr-1.5" />
+                  <span className="bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent font-semibold">Community</span>
                 </Link>
               </div>
             </div>
@@ -931,20 +994,27 @@ export default function HomePage() {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-4 pt-4 pb-6 space-y-3 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-lg">
-                <Link href="#home" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  🏠 {t.nav.home}
+                <Link href="#home" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium flex items-center gap-2">
+                  <Home className="w-4 h-4" />
+                  {t.nav.home}
                 </Link>
-                <Link href="#services" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 rounded-lg font-medium">
-                  ✂️ {t.nav.services}
+                <Link href="#services" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 rounded-lg font-medium flex items-center gap-2">
+                  <TbScissors className="w-4 h-4" />
+                  {t.nav.services}
                 </Link>
-                <Link href="#booking" className="block px-4 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-200 rounded-lg font-medium">
-                  📅 {t.nav.booking}
+                <Link href="#booking" className="block px-4 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-200 rounded-lg font-medium flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  {t.nav.booking}
                 </Link>
-                <Link href="#barbers" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium">
-                  👨‍💼 {t.nav.joinTeam}
+                <Link href="#barbers" className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg font-medium flex items-center gap-2">
+                  <TbUsers className="w-4 h-4" />
+                  {t.nav.joinTeam}
                 </Link>
-                <Link href="#community" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 rounded-lg font-medium">
-                  🎬 {t.nav.community}
+                <Link href="/community-portal" className="block px-4 py-3 text-gray-700 hover:text-pink-600 hover:bg-gradient-to-r hover:from-pink-50 hover:to-red-50 transition-all duration-200 rounded-lg font-medium border border-pink-200 bg-gradient-to-r from-pink-50 to-red-50">
+                  <span className="flex items-center">
+                    <FaTrophy className="w-4 h-4 text-pink-600 mr-2" />
+                    <span className="bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent font-semibold">Community</span>
+                  </span>
                 </Link>
                 
                 {/* Mobile Language Switcher */}
@@ -1047,6 +1117,33 @@ export default function HomePage() {
               <Scissors className="w-5 h-5 mr-2" />
               {t.hero.servicesButton}
             </Button>
+          </div>
+          
+          {/* Portal Access Section */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <p className="text-lg text-gray-600 mb-6 text-center">Join our community</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link href="/barber-portal">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-purple-500 text-purple-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 px-8 py-4 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+                >
+                  <Settings className="w-5 h-5 mr-2 text-purple-600" />
+                  <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">Barber Portal</span>
+                </Button>
+              </Link>
+              <Link href="/community-portal">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-pink-500 text-pink-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-red-50 px-8 py-4 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+                >
+                  <Users className="w-5 h-5 mr-2 text-pink-600" />
+                  <span className="bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent font-semibold">Community Portal</span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -1353,33 +1450,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Community Section */}
-      <section id="community" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 via-rose-50 to-pink-50">
+      {/* Featured Street Cut Video Section */}
+      <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 via-pink-50 to-red-50">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <Badge className="mb-6 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-full text-base shadow-lg">
-              {t.community.badge}
+              Street Cuts
             </Badge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6 leading-tight">
-              {t.community.title}
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
+              Watch Our Community in Action
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {t.community.subtitle}
-              <span className="block mt-2 text-lg bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent font-semibold">
-                {t.community.subtitleExtra}
-              </span>
+              Experience the artistry of street cutting and join our vibrant community of barbers and enthusiasts
             </p>
           </div>
 
           {/* Featured Video */}
-          <div className="max-w-4xl mx-auto mb-16">
+          <div className="max-w-4xl mx-auto mb-12">
             <Card className="group bg-white/90 backdrop-blur-md hover:shadow-2xl transition-all duration-700 transform hover:scale-[1.02] cursor-pointer border-0 rounded-3xl overflow-hidden shadow-xl">
               <div className="relative overflow-hidden">
                 <Image
-                  src={communityVideos[0].thumbnail}
-                  alt={communityVideos[0].title}
+                  src="/placeholder.jpg"
+                  alt="Fresh Street Cut - Free Community Session - Professional barber cutting hair outdoors"
                   width={800}
                   height={450}
+                  priority
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   className="w-full h-64 sm:h-80 md:h-96 object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:from-black/70 transition-all duration-500"></div>
@@ -1389,22 +1486,23 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="absolute top-6 right-6 bg-black/80 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-semibold">
-                  {communityVideos[0].views} views
+                  12.5K views
                 </div>
                 <div className="absolute bottom-6 left-6 right-6">
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-pink-200 transition-colors">
-                    {communityVideos[0].title}
+                    Fresh Street Cut - Free Community Session
                   </h3>
+                  <Badge className="bg-purple-500/80 text-white backdrop-blur-sm">Featured Video</Badge>
                 </div>
               </div>
               <CardContent className="p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
                   <Button 
                     size="lg" 
                     className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Instagram className="w-5 h-5 mr-2" />
-                    {t.community.videoButtons.instagram}
+                    Watch on Instagram
                   </Button>
                   <Button 
                     size="lg" 
@@ -1412,59 +1510,27 @@ export default function HomePage() {
                     className="w-full sm:w-auto border-2 border-purple-500 text-purple-700 hover:bg-purple-50 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Music className="w-5 h-5 mr-2" />
-                    {t.community.videoButtons.tiktok}
+                    Watch on TikTok
                   </Button>
+                </div>
+                
+                {/* Call to Action */}
+                <div className="text-center border-t border-gray-200 pt-6">
+                  <p className="text-lg text-gray-600 mb-4">
+                    Love what you see? Join our community and participate in competitions!
+                  </p>
+                  <Link href="/community-portal">
+                    <Button
+                      size="lg"
+                      className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white px-10 py-4 text-lg font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                    >
+                      <Users className="w-6 h-6 mr-3" />
+                      Join Community & Compete
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* Community Interaction Section */}
-          <div className="bg-gradient-to-r from-white/90 via-pink-50/90 to-red-50/90 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-pink-200 shadow-2xl">
-            <div className="text-center mb-10">
-              <h3 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
-                {t.community.suggestion.title}
-              </h3>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                {t.community.suggestion.subtitle}
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-pink-200 hover:shadow-lg transition-all duration-300">
-                  <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-                    <Upload className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-1">{t.community.suggestion.submitIdeas}</h4>
-                    <p className="text-gray-600">{t.community.suggestion.submitIdeasDesc}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-pink-200 hover:shadow-lg transition-all duration-300">
-                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
-                    <Users className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-1">{t.community.suggestion.communityVote}</h4>
-                    <p className="text-gray-600">{t.community.suggestion.communityVoteDesc}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <Button
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700 text-white py-6 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105"
-                >
-                  <Users className="w-6 h-6 mr-3" />
-                  {t.community.suggestion.joinButton}
-                </Button>
-                <p className="text-sm text-gray-500 mt-4 max-w-xs mx-auto">
-                  {t.community.suggestion.joinDesc}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -1501,26 +1567,26 @@ export default function HomePage() {
                 <li>
                   <button
                     onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
+                    className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block flex items-center gap-2"
                   >
+                    <TbScissors className="w-4 h-4" />
                     {t.footer.links.bookNow}
                   </button>
                 </li>
                 <li>
                   <button
                     onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
+                    className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block flex items-center gap-2"
                   >
+                    <TbBriefcase className="w-4 h-4" />
                     {t.footer.links.services}
                   </button>
                 </li>
                 <li>
-                  <button
-                    onClick={() => document.getElementById('community')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block"
-                  >
-                    {t.footer.links.community}
-                  </button>
+                  <Link href="/community-portal" className="hover:text-cyan-400 transition-colors hover:translate-x-1 transform inline-block flex items-center gap-2">
+                    <FaTrophy className="w-4 h-4 text-yellow-400" />
+                    Community Portal
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -1572,21 +1638,29 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <div className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Clip & Chill. {t.footer.links.allRights} Made with �
+            <div className="text-gray-400 text-sm flex items-center justify-center md:justify-start gap-1 flex-wrap">
+              <span>© {new Date().getFullYear()} Clip & Chill. {t.footer.links.allRights} Made with</span>
+              <FaHeart className="w-3 h-3 text-red-400" />
+              <span>in Switzerland</span>
+              <FaFlag className="w-3 h-3 text-red-500" />
             </div>
 
             <div className="flex items-center gap-4 text-sm">
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
+              <Link href="/privacy" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
                 {t.footer.links.privacy}
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
+              <Link href="/terms" className="text-gray-400 hover:text-cyan-400 transition-colors hover:underline">
                 {t.footer.links.terms}
               </Link>
+              <span className="text-cyan-400 font-medium flex items-center gap-1">
+                <FaFlag className="w-3 h-3 text-red-500" />
+                {t.footer.links.swiss}
+              </span>
             </div>
           </div>
         </div>
       </footer>
     </div>
+    </>
   )
 }
